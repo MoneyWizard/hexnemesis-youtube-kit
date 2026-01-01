@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: hexnemesis-youtube-kit
+    runtime: node
+    repo: .
+    buildCommand: npm install
+    startCommand: node src/server.js
+    envVars:
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: SMTP_PORT
+        sync: false
