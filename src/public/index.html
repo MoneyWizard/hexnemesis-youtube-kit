@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>YouTube End Screens Mastery Kit</title>
+  <meta name="viewport" content="width=device-width">
+  <style>
+    body { font-family: Arial; max-width: 600px; margin: 0 auto; padding: 20px; }
+    .hero { background: #ff4444; color: white; padding: 40px; text-align: center; }
+    .buy-btn { background: #28a745; color: white; padding: 15px 30px; font-size: 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%; margin: 20px 0; }
+    .free-btn { background: #007bff; color: white; padding: 15px; font-size: 16px; border: none; border-radius: 5px; width: 100%; margin: 10px 0; }
+    input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+    h1 { font-size: 32px; margin: 0; }
+    .price { font-size: 48px; font-weight: bold; color: #ffd700; }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <h1>🎥 YouTube End Screens</h1>
+    <h1>Mastery Kit 2026</h1>
+    <div class="price">$27</div>
+    <p>10x Views • 5x Subs • Proven Templates</p>
+  </div>
+
+  <h2>Get Free Sample ↓</h2>
+  <form id="leadForm">
+    <input type="email" id="email" placeholder="Enter email for free sample" required>
+    <button type="submit" class="free-btn">Get Free Sample → Thunderbird</button>
+  </form>
+
+  <h2>Buy Full Kit ($27)</h2>
+  <form id="buyForm">
+    <input type="email" id="buyEmail" placeholder="Your email" required>
+    <button type="submit" class="buy-btn">Buy Now $27 → Instant Access</button>
+  </form>
+
+  <script>
+    // Free sample
+    document.getElementById('leadForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      await fetch('/submit-lead', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email})
+      });
+      alert('✅ Sample sent to Thunderbird!');
+    });
+
+    // Stripe buy
+    document.getElementById('buyForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('buyEmail').value;
+      const res = await fetch('/create-checkout-session', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email})
+      });
+      const {url} = await res.json();
+      window.location.href = url;
+    });
+  </script>
+</body>
+</html>
