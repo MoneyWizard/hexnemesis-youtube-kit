@@ -35,7 +35,7 @@ app.post('/submit-lead', async (req, res) => {
   res.json({ success: true });
 });
 
-// STRIPE $27 PAYMENT (Anonymous)
+// STRIPE $1 PAYMENT (Anonymous)
 app.post('/create-checkout-session', async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
