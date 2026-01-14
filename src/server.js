@@ -45,7 +45,7 @@ app.post('/create-checkout-session', async (req, res) => {
         product_data: {
           name: 'YouTube End Screens Mastery Kit 2026'
         },
-        unit_amount: 2700,
+        unit_amount: 1,
       },
       quantity: 1,
     }],
