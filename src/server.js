@@ -15,7 +15,7 @@ app.post('/submit-lead', async (req, res) => {
   console.log('LEAD:', req.body.email);
   
   // Thunderbird email
-  const transporter = nodemailer.createTransporter({
+const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
     secure: false,
