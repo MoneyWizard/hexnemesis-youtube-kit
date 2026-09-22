@@ -1,10 +1,10 @@
 require('dotenv').config({ path: './src/.env' });
 
 const express = require('express');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const nodemailer = require('nodemailer');
 const path = require('path');
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(express.static('public'));
 app.use(express.json());
@@ -12,52 +12,72 @@ app.use(express.urlencoded({ extended: true }));
 
 // FREE SAMPLE → Thunderbird
 app.post('/submit-lead', async (req, res) => {
-  console.log('LEAD:', req.body.email);
-  
-  // Thunderbird email
-const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: false,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS
-    }
-  });
-  
-  await transporter.sendMail({
-    from: process.env.SMTP_USER,
-    to: process.env.SMTP_USER,
-    subject: 'HexNemesis YouTube Lead',
-    text: `New lead: ${req.body.email}`
-  });
-  
-  res.json({ success: true });
+  const email = String(req.body.email || '').trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ success: false, error: 'Enter a valid email address.' });
+  }
+
+  if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    return res.status(503).json({ success: false, error: 'Email delivery is not configured yet.' });
+  }
+
+  try {
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT) || 587,
+      secure: false,
+      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
+    });
+
+    await transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to: process.env.SMTP_USER,
+      subject: 'New YouTube End Screen Scorecard lead',
+      text: `New lead: ${email}`
+    });
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Lead delivery failed:', error.message);
+    res.status(500).json({ success: false, error: 'We could not send the sample. Please try again.' });
+  }
 });
 
 // STRIPE $1 PAYMENT (Anonymous)
 app.post('/create-checkout-session', async (req, res) => {
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ['card'],
-    line_items: [{
-      price_data: {
-        currency: 'usd',
-        product_data: {
-          name: 'YouTube End Screens Mastery Kit 2026'
+  const email = String(req.body.email || '').trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: 'Enter a valid email address.' });
+  }
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return res.status(503).json({ error: 'Checkout is not configured yet.' });
+  }
+
+  try {
+    const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [{
+        price_data: {
+          currency: 'usd',
+          product_data: { name: 'YouTube End Screens Mastery Kit 2026' },
+          unit_amount: 2700,
         },
-        unit_amount: 1,
-      },
-      quantity: 1,
-    }],
-    mode: 'payment',
-    customer_email: req.body.email,
-    success_url: `${req.headers.origin}?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${req.headers.origin}?canceled=true`,
-  });
-  
-  res.json({ url: session.url });
+        quantity: 1,
+      }],
+      mode: 'payment',
+      customer_email: email,
+      success_url: `${req.headers.origin}?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.origin}?canceled=true`,
+    });
+
+    res.json({ url: session.url });
+  } catch (error) {
+    console.error('Checkout creation failed:', error.message);
+    res.status(500).json({ error: 'Checkout is temporarily unavailable. Please try again.' });
+  }
 });
 
-app.listen(3000, () => {
-  console.log('🚀 HexNemesis Server LIVE on port 3000');
+app.listen(port, () => {
+  console.log(`HexNemesis Server LIVE on port ${port}`);
 });

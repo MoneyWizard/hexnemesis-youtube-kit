@@ -1,61 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>YouTube End Screens Mastery Kit</title>
-  <meta name="viewport" content="width=device-width">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Build YouTube end screens that turn one view into a binge. Free scorecard plus creator-tested templates.">
+  <title>End Screen Lab | Turn one view into a binge</title>
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:Arial,sans-serif;background:#f5f5f5;max-width:600px;margin:0 auto;padding:20px;}
-    .hero{background:linear-gradient(135deg,#ff4444,#cc0000);color:white;padding:40px;text-align:center;border-radius:15px;box-shadow:0 10px 30px rgba(255,68,68,0.3);}
-    h1{font-size:2.5em;margin:0 0 10px;font-weight:700;}
-    .price{font-size:4em;font-weight:900;color:#ffd700;text-shadow:2px 2px 4px rgba(0,0,0,0.3);}
-    .subtitle{font-size:1.2em;margin:10px 0;}
-    .form-section{background:white;padding:30px;margin:20px 0;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,0.1);}
-    input{width:100%;padding:15px;margin:10px 0;font-size:16px;border:2px solid #ddd;border-radius:10px;}
-    input:focus{border-color:#007bff;outline:none;box-shadow:0 0 10px rgba(0,123,255,0.3);}
-    .free-btn{background:#007bff;color:white;padding:18px;font-size:18px;border:none;border-radius:10px;width:100%;margin:10px 0;cursor:pointer;font-weight:700;transition:all 0.3s;}
-    .free-btn:hover{background:#0056b3;transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,123,255,0.4);}
-    .buy-btn{background:#28a745;color:white;padding:20px;font-size:20px;border:none;border-radius:10px;width:100%;margin:20px 0;cursor:pointer;font-weight:900;transition:all 0.3s;}
-    .buy-btn:hover{background:#218838;transform:translateY(-3px);box-shadow:0 10px 25px rgba(40,167,69,0.4);}
+    :root{--ink:#17231f;--muted:#60706a;--cream:#f7f5ef;--paper:#fffdf8;--green:#b8f36b;--deep:#163b35;--orange:#ff7448;--line:#dce3d9;--shadow:0 20px 60px rgba(22,59,53,.12)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:inherit;text-decoration:none}.wrap{max-width:1120px;margin:auto;padding:0 24px}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:24px 0}.brand{font-weight:900;letter-spacing:-.04em;font-size:20px}.brand span{color:var(--orange)}.nav-links{display:flex;gap:25px;color:var(--muted);font-size:14px;font-weight:700}.nav-links a:hover{color:var(--ink)}
+    .hero{padding:58px 0 74px;display:grid;grid-template-columns:1.1fr .9fr;gap:70px;align-items:center}.eyebrow{color:#7a8e39;text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:900}.hero h1{font-size:clamp(44px,7vw,78px);line-height:.98;letter-spacing:-.075em;margin:16px 0 22px;max-width:680px}.hero h1 em{font-style:normal;color:#5e942c}.lede{font-size:19px;color:var(--muted);max-width:560px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn{border:0;border-radius:999px;padding:14px 22px;font-weight:850;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:.2s transform,.2s box-shadow}.btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(22,59,53,.14)}.btn-primary{background:var(--deep);color:white}.btn-lime{background:var(--green);color:var(--deep)}.btn-quiet{background:transparent;border:1px solid var(--line);color:var(--deep)}
+    .proof{display:flex;gap:18px;align-items:center;margin-top:30px;color:var(--muted);font-size:13px}.avatars{display:flex}.avatar{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#ffd8a8;border:2px solid var(--cream);margin-left:-7px;font-size:13px}.avatar:first-child{margin-left:0;background:#bae4dc}.avatar:nth-child(3){background:#d7c4f4}
+    .hero-card{background:var(--deep);border-radius:28px;padding:25px;color:white;box-shadow:var(--shadow);transform:rotate(2deg)}.card-top{display:flex;justify-content:space-between;font-size:12px;color:#b9d5c8}.mini-screen{background:#285951;border-radius:16px;margin:18px 0;padding:18px}.mini-video{height:125px;border-radius:10px;background:linear-gradient(130deg,#ef7455,#f8c26d);display:flex;align-items:center;justify-content:center;font-size:45px}.end-row{display:flex;gap:8px;margin-top:12px}.end-tile{height:45px;border-radius:7px;background:#e8f4dc;flex:1}.end-tile:last-child{background:var(--green);flex:1.6}.card-caption{font-size:13px;color:#b9d5c8;margin:0}
+    .ticker{background:var(--deep);color:white;padding:14px 0;font-weight:750;font-size:14px}.ticker .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.ticker strong{color:var(--green)}
+    section{padding:82px 0}.section-head{max-width:650px;margin-bottom:30px}.section-head h2{font-size:clamp(30px,4vw,47px);line-height:1.05;letter-spacing:-.06em;margin:10px 0 12px}.section-head p{color:var(--muted);font-size:17px}
+    .tool{display:grid;grid-template-columns:.82fr 1.18fr;gap:25px}.panel{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:var(--shadow)}.panel h3{font-size:22px;margin:0 0 8px;letter-spacing:-.04em}.panel-intro{color:var(--muted);margin:0 0 25px;font-size:14px}.field{margin:18px 0}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:8px}.field select,.field input{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px 13px;background:white;color:var(--ink);font:inherit}.score{background:var(--deep);border-radius:18px;color:white;padding:24px;margin-bottom:18px;display:flex;align-items:center;gap:20px}.score-number{font-size:53px;line-height:1;font-weight:900;color:var(--green);letter-spacing:-.07em}.score small{color:#b9d5c8}.result{background:#f0f8e8;border-radius:15px;padding:18px;color:var(--deep)}.result strong{display:block;font-size:18px;margin-bottom:5px}.result p{margin:0;color:#526d4a;font-size:14px}.check{display:flex;gap:13px;margin:17px 0;align-items:flex-start}.check-mark{background:var(--green);border-radius:50%;width:23px;height:23px;display:grid;place-items:center;font-weight:900;flex:none}.check p{margin:0;color:var(--muted);font-size:14px}.check b{color:var(--ink)}
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.feature{padding:24px;border:1px solid var(--line);border-radius:18px;background:rgba(255,253,248,.6)}.feature-icon{font-size:27px}.feature h3{margin:15px 0 6px;font-size:18px}.feature p{margin:0;color:var(--muted);font-size:14px}.offer{background:var(--orange);border-radius:28px;padding:40px;color:white;display:grid;grid-template-columns:1fr auto;align-items:center;gap:28px}.offer h2{font-size:clamp(30px,4vw,48px);line-height:1.02;letter-spacing:-.06em;margin:0 0 12px}.offer p{margin:0;max-width:600px;color:#fff3ec}.offer .price{font-size:54px;font-weight:900;letter-spacing:-.07em}.offer .btn{background:white;color:var(--deep);width:100%}.form-box{max-width:520px}.form-row{display:flex;gap:10px;margin-top:15px}.form-row input{flex:1;border:0;border-radius:999px;padding:14px 18px;font:inherit;min-width:0}.form-row .btn{white-space:nowrap}.note{font-size:12px;color:var(--muted);margin-top:11px}.status{font-size:13px;margin-top:12px;min-height:20px}.status.error{color:#b33822}.status.success{color:#397227}.footer{padding:25px 0 45px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;border-top:1px solid var(--line)}
+    @media(max-width:800px){.hero,.tool{grid-template-columns:1fr;gap:35px}.hero{padding-top:30px}.hero-card{max-width:500px;margin:auto}.features{grid-template-columns:1fr}.offer{grid-template-columns:1fr}.nav-links{display:none}.form-row{flex-direction:column}.form-row .btn{width:100%}}
   </style>
 </head>
 <body>
-  <div class="hero">
-    <h1>🎥 YouTube End Screens</h1>
-    <h1>Mastery Kit 2026</h1>
-    <div class="price">$27</div>
-    <p class="subtitle">10x Views • 5x Subs • Proven Templates</p>
-  </div>
-
-  <div class="form-section">
-    <h2 style="color:#333;margin-bottom:20px;">Get Free Sample ↓</h2>
-    <form id="leadForm">
-      <input type="email" id="email" placeholder="Enter email for free sample" required>
-      <button type="submit" class="free-btn">🚀 Get Free Sample → Thunderbird</button>
-    </form>
-  </div>
-
-  <div class="form-section">
-    <h2 style="color:#333;margin-bottom:20px;">Buy Full Kit ($27)</h2>
-    <form id="buyForm">
-      <input type="email" id="buyEmail" placeholder="Your email for instant access" required>
-      <button type="submit" class="buy-btn">💰 Buy Now $27 → Instant Download</button>
-    </form>
-  </div>
-
+  <header class="wrap nav"><a class="brand" href="#">END SCREEN <span>LAB</span></a><nav class="nav-links"><a href="#scorecard">Free scorecard</a><a href="#kit">What's inside</a><a href="#get-kit">Get the kit</a><a href="https://github.com/MoneyWizard/hexnemesis-youtube-kit" target="_blank" rel="noopener">View repo</a></nav><a class="btn btn-quiet" href="#scorecard">Try it free</a></header>
+  <main>
+    <section class="wrap hero">
+      <div><div class="eyebrow">For creators who want the next click</div><h1>Make every video a <em>starting point.</em></h1><p class="lede">A practical end-screen system for turning casual viewers into binge-watchers, returning fans, and subscribers — without guessing what to link.</p><div class="actions"><a class="btn btn-lime" href="#scorecard">Get my free scorecard <span>→</span></a><a class="btn btn-quiet" href="#kit">See what you get</a></div><div class="proof"><div class="avatars"><span class="avatar">✦</span><span class="avatar">◉</span><span class="avatar">◆</span></div><span>Built for small channels with big plans</span></div></div>
+      <div class="hero-card"><div class="card-top"><span>END SCREEN LAB / FIELD NOTE 01</span><span>2026</span></div><div class="mini-screen"><div class="mini-video">▶</div><div class="end-row"><div class="end-tile"></div><div class="end-tile"></div><div class="end-tile"></div></div></div><p class="card-caption">The best end screen answers one question: “What should I watch next?”</p></div>
+    </section>
+    <div class="ticker"><div class="wrap"><span><strong>Free tool:</strong> score your current end screen in 30 seconds</span><span>No card required · Instant recommendations</span></div></div>
+    <section class="wrap" id="scorecard"><div class="section-head"><div class="eyebrow">The 30-second scorecard</div><h2>Stop linking randomly. Start building a viewing path.</h2><p>Tell us what your channel is trying to do and get a simple next step you can apply to your next upload.</p></div><div class="tool"><div class="panel"><h3>Your channel snapshot</h3><p class="panel-intro">No analytics connection needed. Just your best estimate.</p><div class="field"><label for="goal">What matters most right now?</label><select id="goal"><option value="binge">More views per viewer</option><option value="subs">More subscribers</option><option value="series">Build a repeatable series</option></select></div><div class="field"><label for="views">Average views on a recent video</label><input id="views" type="number" min="0" value="1000"></div><div class="field"><label for="style">Your content style</label><select id="style"><option value="howto">How-to / education</option><option value="story">Story / commentary</option><option value="review">Reviews / comparisons</option></select></div><button class="btn btn-primary" id="scoreBtn" type="button">Calculate my score →</button></div><div class="panel"><div class="score"><div class="score-number" id="scoreNumber">72</div><div><strong>Good foundation</strong><br><small id="scoreLabel">You’re one clear next-watch away from a stronger session.</small></div></div><div class="result"><strong id="resultTitle">Create a “next step” pair</strong><p id="resultText">Link to the video that solves the next problem, not your newest upload. This is the fastest path to more minutes watched.</p></div><div class="check"><span class="check-mark">✓</span><p><b>One primary choice.</b><br>Give viewers one obvious next click instead of four competing destinations.</p></div><div class="check"><span class="check-mark">✓</span><p><b>Match the promise.</b><br>Use the last 10 seconds to preview the payoff of the next video.</p></div><div class="check"><span class="check-mark">✓</span><p><b>Measure the handoff.</b><br>Review end-screen click rate after 48 hours and keep the winner.</p></div></div></div></section>
+    <section class="wrap" id="kit"><div class="section-head"><div class="eyebrow">Inside the creator kit</div><h2>Everything you need to ship the upgrade.</h2><p>Skip the theory spiral. These are plug-in assets designed to make the next upload better.</p></div><div class="features"><article class="feature"><div class="feature-icon">🧭</div><h3>12 viewing-path templates</h3><p>Pick the right next-video pattern for tutorials, stories, reviews, and series.</p></article><article class="feature"><div class="feature-icon">✍️</div><h3>End-screen scripts</h3><p>Short, natural prompts that earn the next click without sounding like an ad.</p></article><article class="feature"><div class="feature-icon">📈</div><h3>48-hour scorecard</h3><p>Track the few numbers that matter and turn every upload into a useful experiment.</p></article></div></section>
+    <section class="wrap" id="get-kit"><div class="offer"><div><div class="eyebrow" style="color:#ffe0d5">The complete system</div><h2>Make your next upload compound.</h2><p>Get the End Screen Mastery Kit with templates, scripts, and the simple review loop creators can actually keep up with.</p></div><div><div class="price">$27</div><form id="buyForm"><div class="form-row"><input type="email" id="buyEmail" placeholder="you@example.com" aria-label="Email for the creator kit" required><button class="btn" type="submit">Get instant access →</button></div><div class="status" id="buyStatus" role="status"></div></form></div></div></section>
+    <section class="wrap"><div class="panel form-box"><div class="eyebrow">Free starter template</div><h3>Get the one-page end-screen checklist.</h3><p class="panel-intro">A tiny pre-publish prompt to keep your next video connected to the one before it.</p><form id="leadForm"><div class="form-row"><input type="email" id="email" placeholder="you@example.com" aria-label="Email for free checklist" required><button class="btn btn-primary" type="submit">Send it →</button></div><div class="status" id="leadStatus" role="status"></div></form><p class="note">One useful email when we have one. Unsubscribe anytime.</p></div></section>
+  </main>
+  <footer class="wrap footer"><span>© 2026 End Screen Lab</span><span>Made for creators who keep publishing. <a href="https://github.com/MoneyWizard/hexnemesis-youtube-kit" target="_blank" rel="noopener">View the project on GitHub →</a></span></footer>
   <script>
-    document.getElementById('leadForm').addEventListener('submit', async(e)=>{
-      e.preventDefault();
-      const email=document.getElementById('email').value;
-      await fetch('/submit-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
-      alert('✅ FREE SAMPLE');
+    const $ = (id) => document.getElementById(id);
+    $('scoreBtn').addEventListener('click', () => {
+      const views = Math.max(0, Number($('views').value) || 0);
+      const goal = $('goal').value;
+      const style = $('style').value;
+      const base = Math.min(93, Math.max(48, 57 + Math.round(Math.log10(Math.max(views, 10)) * 5) + (goal === 'series' ? 5 : 0)));
+      $('scoreNumber').textContent = base;
+      const copy = {
+        binge: ['Create a “next step” pair', 'Link to the video that solves the next problem, not your newest upload. This is the fastest path to more minutes watched.'],
+        subs: ['Earn the subscription', 'Use the end screen to show the transformation your next video delivers, then make subscribing the low-friction secondary choice.'],
+        series: ['Name the next episode', 'Make the next video feel like the obvious chapter. A consistent series label helps viewers trust the path and come back.']
+      };
+      $('resultTitle').textContent = copy[goal][0];
+      $('resultText').textContent = copy[goal][1];
+      $('scoreLabel').textContent = `${style === 'howto' ? 'Your teaching format' : style === 'story' ? 'Your story format' : 'Your review format'} has room for one stronger handoff.`;
     });
-    document.getElementById('buyForm').addEventListener('submit', async(e)=>{
-      e.preventDefault();
-      const email=document.getElementById('buyEmail').value;
-      const res=await fetch('/create-checkout-session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
-      const{url}=await res.json();
-      window.location.href=url;
+    async function postForm(url, email, statusId, successText) {
+      const status = $(statusId); status.className = 'status'; status.textContent = 'Working…';
+      try {
+        const response = await fetch(url, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email})});
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Something went wrong.');
+        status.className = 'status success'; status.textContent = successText;
+      } catch (error) { status.className = 'status error'; status.textContent = error.message; }
+    }
+    $('leadForm').addEventListener('submit', (event) => { event.preventDefault(); postForm('/submit-lead', $('email').value, 'leadStatus', 'Checklist sent — check your inbox.'); });
+    $('buyForm').addEventListener('submit', async (event) => {
+      event.preventDefault(); const status = $('buyStatus'); status.className = 'status'; status.textContent = 'Opening secure checkout…';
+      try {
+        const response = await fetch('/create-checkout-session', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:$('buyEmail').value})});
+        const data = await response.json(); if (!response.ok) throw new Error(data.error || 'Checkout unavailable.');
+        window.location.href = data.url;
+      } catch (error) { status.className = 'status error'; status.textContent = error.message; }
     });
   </script>
 </body>
