@@ -10,15 +10,35 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// FREE SAMPLE → Thunderbird
+const allowedOrigins = new Set([
+  'https://moneywizard.github.io',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000'
+]);
+
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.has(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+  }
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  if (req.method === 'OPTIONS') return res.sendStatus(204);
+  next();
+});
+
+// FREE SAMPLE → server log, with optional email delivery
 app.post('/submit-lead', async (req, res) => {
   const email = String(req.body.email || '').trim();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return res.status(400).json({ success: false, error: 'Enter a valid email address.' });
   }
 
+  console.log(`[LEAD ${new Date().toISOString()}] ${email}`);
+
   if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
-    return res.status(503).json({ success: false, error: 'Email delivery is not configured yet.' });
+    return res.json({ success: true, delivery: 'server-log' });
   }
 
   try {
@@ -36,10 +56,10 @@ app.post('/submit-lead', async (req, res) => {
       text: `New lead: ${email}`
     });
 
-    res.json({ success: true });
+    res.json({ success: true, delivery: 'email' });
   } catch (error) {
     console.error('Lead delivery failed:', error.message);
-    res.status(500).json({ success: false, error: 'We could not send the sample. Please try again.' });
+    res.json({ success: true, delivery: 'server-log' });
   }
 });
 

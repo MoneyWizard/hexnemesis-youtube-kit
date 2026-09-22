@@ -66,11 +66,13 @@
         status.className = 'status success'; status.textContent = successText;
       } catch (error) { status.className = 'status error'; status.textContent = error.message; }
     }
-    $('leadForm').addEventListener('submit', (event) => { event.preventDefault(); postForm('/submit-lead', $('email').value, 'leadStatus', 'Checklist sent — check your inbox.'); });
+    const API_BASE = window.location.hostname.endsWith('github.io') ? 'https://hexnemesis-youtube-kit.onrender.com' : '';
+    const apiUrl = (path) => `${API_BASE}${path}`;
+    $('leadForm').addEventListener('submit', (event) => { event.preventDefault(); postForm(apiUrl('/submit-lead'), $('email').value, 'leadStatus', 'You’re on the list — we saved your request.'); });
     $('buyForm').addEventListener('submit', async (event) => {
       event.preventDefault(); const status = $('buyStatus'); status.className = 'status'; status.textContent = 'Opening secure checkout…';
       try {
-        const data = await requestJson('/create-checkout-session', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:$('buyEmail').value})});
+        const data = await requestJson(apiUrl('/create-checkout-session'), {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:$('buyEmail').value})});
         window.location.href = data.url;
       } catch (error) { status.className = 'status error'; status.textContent = error.message; }
     });
