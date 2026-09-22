@@ -50,12 +50,19 @@
       $('resultText').textContent = copy[goal][1];
       $('scoreLabel').textContent = `${style === 'howto' ? 'Your teaching format' : style === 'story' ? 'Your story format' : 'Your review format'} has room for one stronger handoff.`;
     });
+    async function requestJson(url, options) {
+      const response = await fetch(url, options);
+      const body = await response.text();
+      let data;
+      try { data = body ? JSON.parse(body) : {}; }
+      catch (_) { throw new Error('This hosted preview does not have the email service connected yet.'); }
+      if (!response.ok) throw new Error(data.error || 'Something went wrong.');
+      return data;
+    }
     async function postForm(url, email, statusId, successText) {
       const status = $(statusId); status.className = 'status'; status.textContent = 'Working…';
       try {
-        const response = await fetch(url, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email})});
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || 'Something went wrong.');
+        await requestJson(url, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email})});
         status.className = 'status success'; status.textContent = successText;
       } catch (error) { status.className = 'status error'; status.textContent = error.message; }
     }
@@ -63,8 +70,7 @@
     $('buyForm').addEventListener('submit', async (event) => {
       event.preventDefault(); const status = $('buyStatus'); status.className = 'status'; status.textContent = 'Opening secure checkout…';
       try {
-        const response = await fetch('/create-checkout-session', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:$('buyEmail').value})});
-        const data = await response.json(); if (!response.ok) throw new Error(data.error || 'Checkout unavailable.');
+        const data = await requestJson('/create-checkout-session', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:$('buyEmail').value})});
         window.location.href = data.url;
       } catch (error) { status.className = 'status error'; status.textContent = error.message; }
     });
